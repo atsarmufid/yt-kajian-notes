@@ -10,4 +10,7 @@ Thumbs.db
 # Private (not published)
 private/
 
+# Local-only steering (not shared to repo)
+.kiro/steering/output-footer.md
+
 

@@ -9,26 +9,11 @@ Prompt untuk menghasilkan komentar YouTube berformat timestamp dari transkrip ce
 - Pencatat ilmu yang ingin ringkasan terstruktur dari ceramah yang didengarkan
 - Siapa saja yang sering menyimak kajian dan ingin memudahkan orang lain menavigasi video
 
-## Fitur
-
-- Timestamp clickable (M:SS / H:MM:SS)
-- Pengelompokan per topik/pertanyaan dengan header
-- Dua varian prompt:
-  - **PROMPT.md** — dengan emoji tematik (📖 dalil, 💡 tips, ⚖️ hukum, ⚠️ klarifikasi)
-  - **PROMPT-YT-SAFE.md** — tanpa emoji, format aman dari filter spam YouTube
-- Mendukung format ceramah biasa maupun Q&A
-- Guardrail: tidak mengarang dalil, setia pada transkrip
-
 ## Cara Pakai
 
 ### 1. Dapatkan Transkrip
 
-Gunakan salah satu website berikut untuk generate transkrip dari video YouTube:
-
-- [TubeTranscript.com](https://tubetranscript.com)
-- [YouTubeTranscript.com](https://youtubetranscript.com)
-
-Cukup paste URL video, lalu copy hasil transkripnya.
+Gunakan [TubeTranscript.com](https://tubetranscript.com) untuk generate transkrip dari video YouTube. Cukup paste URL video, lalu copy hasil transkripnya.
 
 > ⚠️ **Perhatian:** Website tersebut kadang menyimpan cache transkrip lama. Jika video pernah dipotong/diedit oleh pemilik channel, transkrip yang dihasilkan bisa tidak sinkron. **Pastikan timestamp terakhir di transkrip sesuai dengan durasi video** sebelum diproses.
 
@@ -36,18 +21,20 @@ Cukup paste URL video, lalu copy hasil transkripnya.
 
 **Manual (LLM manapun):**
 
-1. Buka file [`PROMPT-YT-SAFE.md`](PROMPT-YT-SAFE.md) (recommended) atau [`PROMPT.md`](PROMPT.md)
+1. Buka file [`PROMPT-YT-SAFE.md`](PROMPT-YT-SAFE.md) (recommended) atau [`PROMPT-EMOJI.md`](PROMPT-EMOJI.md)
 2. Ganti bagian `[PASTE TRANSKRIP DI SINI]` dengan transkrip kamu
 3. Copy seluruh isi prompt, paste ke LLM pilihanmu (ChatGPT, Claude, Gemini, dll.)
 4. Hasilnya langsung bisa di-copy-paste ke komentar YouTube
 
 > **Kenapa ada dua prompt?**
-> - `PROMPT.md` — output dengan emoji, cocok untuk deskripsi video atau catatan pribadi
+> - `PROMPT-EMOJI.md` — output dengan emoji, cocok untuk deskripsi video atau catatan pribadi
 > - `PROMPT-YT-SAFE.md` — output tanpa emoji dan karakter khusus yang bisa memicu filter spam YouTube. **Gunakan ini jika output akan di-paste sebagai komentar YouTube.**
 
 **Dengan Kiro (Recommended):**
 
-Project ini sudah dikonfigurasi dengan [Kiro](https://kiro.dev) steering dan skill, sehingga bisa langsung generate otomatis:
+[Kiro](https://kiro.dev) adalah AI coding agent — jika kamu tidak familiar, cukup gunakan cara manual di atas.
+
+Project ini sudah dikonfigurasi dengan Kiro steering dan skill, sehingga bisa langsung generate otomatis:
 
 1. Buka project ini di Kiro
 2. Paste transkrip langsung ke chat — tanpa perlu instruksi tambahan
@@ -59,9 +46,33 @@ Contoh output di folder [`example/`](example/) seluruhnya dihasilkan oleh Kiro (
 
 Project ini menyertakan skill definition di folder `.agents/skills/`. Jika kamu menggunakan AI coding agent yang mendukung custom skills/instructions (seperti Cursor, Windsurf, dll.), cukup berikan transkrip dan agent akan otomatis memproses sesuai aturan yang sudah didefinisikan.
 
+## Fitur
+
+- Timestamp clickable (M:SS / H:MM:SS)
+- Pengelompokan per topik/pertanyaan dengan header
+- Dua varian prompt:
+  - **PROMPT-EMOJI.md** — dengan emoji tematik (📖 dalil, 💡 tips, ⚖️ hukum, ⚠️ klarifikasi)
+  - **PROMPT-YT-SAFE.md** — tanpa emoji, format aman dari filter spam YouTube
+- Mendukung format ceramah biasa maupun Q&A
+- Guardrail: tidak mengarang dalil, setia pada transkrip
+
 ## Contoh Output
 
-Lihat contoh lengkap (input & output) di folder [`example/`](example/) — seluruhnya dihasilkan menggunakan Kiro (Claude Opus 4.6).
+Contoh cuplikan hasil generate (format YT-safe):
+
+```
+Poin Penting: Sabar adalah Separuh Iman
+
+0:00 Pembukaan dan doa
+
+[Iman Terbagi Dua: Sabar dan Syukur]
+2:12 Atsar Ibnu Mas'ud: iman = separuh sabar, separuh syukur
+3:23 Iman secara garis besar: sabar dan syukur
+4:30 "Inna fi dzalika la ayat li kulli shabbarin syakur", ada di 5 ayat
+6:41 QS. Ibrahim: 5, Musa ؑ diutus mengeluarkan kaum dari kegelapan
+```
+
+Contoh lengkap (input & output) ada di folder [`example/`](example/) — seluruhnya dihasilkan menggunakan Kiro (Claude Opus 4.6).
 
 Video sumber: [247. INILAH SEPARUH IMAN MU | Tadzkiratus saami' | Ustadz Muhammad Nuzul Dzikri](https://youtu.be/bY3qthc5muw)
 
@@ -71,8 +82,9 @@ Video sumber: [247. INILAH SEPARUH IMAN MU | Tadzkiratus saami' | Ustadz Muhamma
 yt-kajian-notes/
 ├── README.md
 ├── LICENSE
-├── PROMPT.md                         # Prompt dengan emoji (untuk deskripsi/catatan)
+├── PROMPT-EMOJI.md                   # Prompt dengan emoji (untuk deskripsi/catatan)
 ├── PROMPT-YT-SAFE.md                 # Prompt YouTube-safe (untuk komentar YouTube)
+├── PROMPT-CONDENSE.md                # Prompt untuk memadatkan output yang terlalu panjang
 ├── example/
 │   ├── input.txt                     # Contoh transkrip input
 │   └── output.txt                    # Contoh hasil output (generated by Kiro)
@@ -98,7 +110,8 @@ yt-kajian-notes/
 - Cocok untuk video kajian 30 menit sampai 2 jam. Untuk video lebih panjang, bisa pecah transkrip per bagian.
 - **Gunakan `PROMPT-YT-SAFE.md` jika komentar YouTube sering dihapus/disembunyikan.** Format ini menghindari emoji, double dash, em dash, dan karakter yang memicu spam filter YouTube.
 - Karakter unicode keagamaan (ﷻ ﷺ ؑ) aman digunakan di komentar YouTube.
-- Jika komentar masih terhapus meskipun sudah pakai format safe, coba pecah menjadi 2-3 komentar reply (komentar terlalu panjang kadang disembunyikan YouTube).
+- Jika komentar hilang setelah refresh, padatkan poin menggunakan [`PROMPT-CONDENSE.md`](PROMPT-CONDENSE.md) (hapus yang repetitif/elaborasi, fokus pada poin yang benar-benar berbeda topik/dalil) lalu post ulang.
+- Jika masih terhapus, coba pecah menjadi 2-3 komentar reply (komentar terlalu panjang kadang disembunyikan YouTube).
 
 ## Kontribusi
 
