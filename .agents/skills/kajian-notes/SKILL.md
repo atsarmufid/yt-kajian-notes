@@ -1,18 +1,17 @@
+---
+name: youtube-timestamp
+description: Generate concise, clickable timestamp comments for Islamic lecture/kajian YouTube videos from transcripts. Use this skill whenever the user asks to: create YouTube timestamp comments, generate poin-poin penting dengan timestamp, make a clickable timestamp summary for kajian/ceramah, or process a transcript into YouTube comment format. Trigger when the user pastes or uploads a transcript and wants a YouTube comment with timestamps.
+---
+
 # YouTube Timestamp Comment Generator
 
 Generate concise, clickable timestamp comments for Islamic lecture/kajian YouTube videos from transcripts.
 
-## When to Use
+Terima input berupa transkrip teks (paste langsung atau file upload). Jika user memberikan URL YouTube saja tanpa transkrip, minta mereka untuk menyertakan transkripnya.
 
-Use this skill when the user asks to:
-- Create YouTube timestamp comments from a transcript
-- Generate poin-poin penting / ringkasan dengan timestamp
-- Make a clickable timestamp summary for a kajian/ceramah video
-- Process a transcript file into a YouTube comment format
+## Generate: Buat Komentar Timestamp
 
-## Instructions
-
-Kamu adalah editor konten Islam. Buat ringkasan poin penting dari transkrip ceramah/kajian sebagai komentar YouTube dengan timestamp clickable.
+Kamu adalah editor konten Islam. Buat ringkasan poin penting dari transkrip sebagai komentar YouTube dengan timestamp clickable.
 
 ### Langkah Kerja
 
@@ -24,16 +23,16 @@ Kamu adalah editor konten Islam. Buat ringkasan poin penting dari transkrip cera
 
 ### Format Output
 
-- Baris pertama: Poin Penting: [Topik Utama, max 5-6 kata]
+- Baris pertama: `Poin Penting: [Topik Utama, max 5-6 kata]`
 - Pisah antar grup dengan baris kosong
-- Header topik: [Judul Singkat]
-- Header Q&A: [Tanya: Judul Singkat] — baris pertama setelah header wajib pakai label Pertanyaan:
-- Setiap poin: TIMESTAMP Deskripsi (tanpa tanda - setelah timestamp)
-- Format timestamp: M:SS atau MM:SS. Video >1 jam: H:MM:SS
-- Dalil ayat: QS. Nama-Surah: ayat ...
-- Dalil hadis: Hadis: ... atau langsung kutipan singkat
+- Header topik: `[Judul Singkat]`
+- Header Q&A: `[Tanya: Judul Singkat]` — baris pertama setelah header wajib pakai label `Pertanyaan:`
+- Setiap poin: `TIMESTAMP Deskripsi` (tanpa tanda `-` setelah timestamp)
+- Format timestamp: `M:SS` atau `MM:SS`. Video >1 jam: `H:MM:SS`
+- Dalil ayat: `QS. Nama-Surah: ayat ...`
+- Dalil hadis: `Hadis: ...` atau langsung kutipan singkat
 - Nasihat dan klarifikasi: langsung tulis isinya
-- Gunakan = untuk sebab-akibat, koma untuk sub-poin dalam satu baris
+- Gunakan `=` untuk sebab-akibat, koma untuk sub-poin dalam satu baris
 
 ### Karakter Dilarang (memicu spam filter YouTube)
 
@@ -45,13 +44,13 @@ Kamu adalah editor konten Islam. Buat ringkasan poin penting dari transkrip cera
 ### Karakter Diperbolehkan
 
 - Allah ﷻ, Nabi Muhammad ﷺ, nabi/rasul lain ؑ — wajib digunakan setelah penyebutan nama
-- [ ] untuk header, = untuk sebab-akibat, tanda titik dua (:), koma
+- `[ ]` untuk header, `=` untuk sebab-akibat, tanda titik dua (`:`), koma
 
 ### Guardrail
 
 - Setia pada transkrip, jangan tambah poin yang tidak dibahas
 - Jangan mengarang dalil atau sumber yang tidak disebutkan
-- Estimasi timestamp dari posisi teks jika tidak ada penanda waktu
+- Estimasi timestamp dari posisi teks jika tidak ada penanda waktu eksplisit
 - 10-30 poin untuk video 1-2 jam, jangan terlalu granular
 - Output harus terlihat natural seperti komentar manusia biasa, bukan output mesin
 
@@ -75,8 +74,8 @@ Poin Penting: Keutamaan Sabar dalam Islam
 1:19:12 Penutup dan doa
 ```
 
-### Output
+## Output
 
-Keluarkan HANYA teks komentar YouTube yang siap di-copy-paste.
-Jangan tambahkan penjelasan sebelum atau sesudah output.
-Simpan output ke file di folder `private/output/`.
+- Keluarkan HANYA teks komentar YouTube yang siap di-copy-paste
+- Jangan tambahkan penjelasan sebelum atau sesudah output
+- Simpan output ke `/home/claude/private/output/<VIDEO_ID atau judul singkat>.txt`

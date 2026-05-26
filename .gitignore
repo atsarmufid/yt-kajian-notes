@@ -7,10 +7,14 @@ Thumbs.db
 *.swo
 *~
 
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+
 # Private (not published)
 private/
 
 # Local-only steering (not shared to repo)
 .kiro/steering/output-footer.md
-
-
